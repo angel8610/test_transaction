@@ -1,0 +1,42 @@
+services:
+  transaction-server-image:
+    image: transaction-server-image
+    container_name: transaction-server-container
+    build:
+      context: .
+      dockerfile: ./backend/dockerfiles/server.Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - transaction-network
+
+  transaction-client-image:
+    image: transaction-client-image
+    build:
+      context: .
+      dockerfile: ./backend/dockerfiles/client.Dockerfile
+    container_name: transaction-client-container
+    ports:
+      - "8081:8081"
+    depends_on:
+      - transaction-server-image
+    env_file:
+      - .env
+
+    networks:
+      - transaction-network
+
+  transaction-app-imagen:
+    image: transaction-app-imagen
+    container_name: transaction-app-container
+    build:
+      context: ./frontend/transaction-app
+    ports:
+      - "4200:80"
+    depends_on:
+      - transaction-client-image
+    networks:
+      - transaction-network
+
+networks:
+  transaction-network:

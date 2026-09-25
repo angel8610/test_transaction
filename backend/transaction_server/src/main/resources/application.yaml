@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: transaction_server
+
+  # H2 Database configuration
+  datasource:
+    url: jdbc:h2:mem:transaction_db
+    driverClassName: org.h2.Driver
+    username: tdb$user
+    password: transaction_12326
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    # JPA/Hibernate settings
+    hibernate:
+      #ddl-auto: update
+      ddl-auto: create
+      show-sql: true
+
+server:
+  port: 8080
