@@ -2,6 +2,19 @@ spring:
   application:
     name: transaction_client
 
+  # H2 Database configuration
+  datasource:
+    url: ${CLIENT_H2_URL}
+    driverClassName: org.h2.Driver
+    username: ${CLIENT_H2_USER}
+    password: ${CLIENT_H2_PASSWORD}
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    # JPA/Hibernate settings
+    hibernate:
+      ddl-auto: create
+      show-sql: true
+
 server:
   port: 8081
 

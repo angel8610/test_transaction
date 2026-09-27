@@ -9,6 +9,8 @@ services:
       - "8080:8080"
     networks:
       - transaction-network
+    env_file:
+      - .env
 
   transaction-client-image:
     image: transaction-client-image
@@ -22,7 +24,6 @@ services:
       - transaction-server-image
     env_file:
       - .env
-
     networks:
       - transaction-network
 
