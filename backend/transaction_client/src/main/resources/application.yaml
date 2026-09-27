@@ -28,3 +28,8 @@ security:
     algorithm: AES
     transformation: AES/GCM/NoPadding
     key: ${APP_ENCRYPTION_KEY}
+
+  jwt:
+    issuer: "ecommerce-api"
+    expiration: 900
+    secret: ${JWT_SECRET}
