@@ -1,13 +1,10 @@
-export interface LoginRequest {
+export interface LoginRequestDTO {
   username: string;
   password: string;
 }
 
-export interface LoginResponse {
+export interface LoginResponseDTO {
   accessToken: string;
-  tokenType: 'Bearer';
-}
-
-export interface AuthUser {
-  username: string;
+  tokenType: string;
+  expiresIn: number
 }

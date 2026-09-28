@@ -2,11 +2,11 @@ import {inject, Injectable, signal} from '@angular/core';
 import {Observable, tap} from 'rxjs';
 
 import {
-  AuthUser,
-  LoginRequest,
-  LoginResponse
+  LoginRequestDTO,
+  LoginResponseDTO
 } from '../models/auth.models';
 import {HttpClient} from '@angular/common/http';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -15,24 +15,18 @@ export class AuthService {
 
   private readonly http = inject(HttpClient);
 
-  private readonly apiUrl = 'http://localhost:8081/api';
+  private readonly apiUrl = environment.apiBaseAuthUrl;
 
   private readonly token = signal<string | null>(null);
 
-  private readonly currentUser = signal<AuthUser | null>(null);
-
   readonly isAuthenticated = () => this.token() !== null;
 
-  readonly user = this.currentUser.asReadonly();
-
-  login(credentials: LoginRequest): Observable<LoginResponse> {
+  login(credentials: LoginRequestDTO): Observable<LoginResponseDTO> {
     return this.http
-      .post<LoginResponse>(`${this.apiUrl}/auth/login`, credentials)
+      .post<LoginResponseDTO>(`${this.apiUrl}/login`, credentials)
       .pipe(
         tap(response => {
-          console.log('Log')
           this.token.set(response.accessToken);
-          //this.currentUser.set(response.user);
         })
       );
   }
@@ -43,7 +37,6 @@ export class AuthService {
 
   logout(): void {
     this.token.set(null);
-    this.currentUser.set(null);
   }
 
 
